@@ -10,6 +10,7 @@ flask = "*"
 flask-login = "*"
 flask-bcrypt = "*"
 flask-wtf = "*"
+peewee = "*"
 
 [requires]
 python_version = "3.6"
