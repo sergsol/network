@@ -42,7 +42,9 @@ def after_request(response):
 @app.route('/register', methods=('GET', 'POST'))
 def register():
     form = forms.RegisterForm()
-    if form.validate_on_submit():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    elif form.validate_on_submit():
         flash("Yay, you registered!", "success")
         models.User.create_user(
             username=form.username.data,
@@ -50,7 +52,7 @@ def register():
             password=form.password.data
         )
         return redirect(url_for('index'))
-    return render_template('register.html', form=form)
+    # return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=('GET', 'POST'))
@@ -79,6 +81,7 @@ def logout():
 
 
 @app.route('/')
+@login_required
 def index():
 
     return 'Hey '
